@@ -29,7 +29,7 @@ def convert_videos_to_webp(input_dir, output_dir, frame_rate=10, quality=10, wid
             print(f"Error converting {mp4_file}: {e}")
             
 if __name__ == "__main__":
-    input_dir = os.path.expanduser('~/Documents/Apps/workout-assets/arms/animation')
-    output_dir = os.path.expanduser('~/Documents/Apps/workout-assets/arms/animation')
+    input_dir = os.path.expanduser('~/Documents/Apps/workout-assets/hips/animation')
+    output_dir = os.path.expanduser('~/Documents/Apps/workout-assets/hips/animation')
 
     convert_videos_to_webp(input_dir, output_dir, frame_rate=30, quality=30, width=800)

@@ -17,9 +17,20 @@ def rename_files(folder_path):
         # new_name = re.sub(r'[_-]+', '_', new_name).strip('_').lower()
 
         # Apply the renaming pattern using regular expressions
+        # new_name = re.sub(r'\b\d+\b|\b\w{1}\b|\.\.\.', '', file_name, flags=re.IGNORECASE)
+        # new_name = re.sub(r'[_-]+', '_', new_name).strip('_').lower()
+          # Apply the renaming pattern using regular expressions
         new_name = re.sub(r'\b\d+\b|\b\w{1}\b|\.\.\.', '', file_name, flags=re.IGNORECASE)
-        new_name = re.sub(r'[_-]+', '_', new_name).strip('_').lower()
+        new_name = re.sub(r'[_-]+', '_', new_name).strip('_').replace(' ', '_').lower()
 
+
+        # Remove double underscores
+        new_name = re.sub(r'_{2,}', '_', new_name)
+
+        # Remove trailing underscores before file extension
+        base_name, extension = os.path.splitext(new_name)
+        base_name = base_name.rstrip('_')
+        new_name = f"{base_name}{extension}"
 
         # Construct the full paths for the old and new names
         old_path = os.path.join(folder_path, file_name)
@@ -33,6 +44,6 @@ def rename_files(folder_path):
             print(f"Error renaming {file_name}: {e}")
 
 if __name__ == "__main__":
-    folder_path = os.path.expanduser('~/Documents/Apps/workout-assets/videos')
+    folder_path = os.path.expanduser('~/Documents/Apps/workout-assets/all-home-workout')
 
     rename_files(folder_path)
