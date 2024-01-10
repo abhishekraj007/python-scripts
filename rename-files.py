@@ -19,7 +19,7 @@ def rename_files(folder_path):
         # Apply the renaming pattern using regular expressions
         # new_name = re.sub(r'\b\d+\b|\b\w{1}\b|\.\.\.', '', file_name, flags=re.IGNORECASE)
         # new_name = re.sub(r'[_-]+', '_', new_name).strip('_').lower()
-          # Apply the renaming pattern using regular expressions
+        # Apply the renaming pattern using regular expressions
         new_name = re.sub(r'\b\d+\b|\b\w{1}\b|\.\.\.', '', file_name, flags=re.IGNORECASE)
         new_name = re.sub(r'[_-]+', '_', new_name).strip('_').replace(' ', '_').lower()
 
