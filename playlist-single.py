@@ -6,6 +6,8 @@ from mutagen.id3 import ID3, APIC
 from PIL import Image
 from io import BytesIO
 import re
+import mutagen
+from mutagen.mp3 import MP3
 
 
 playlist_name = 'workout-pop-hits'
@@ -17,6 +19,8 @@ playlist_folder = os.path.expanduser(f'~/Documents/Apps/workout-assets/playlists
 
 output_dir = os.path.expanduser('~/Documents/Apps/workout-assets/playlists/json')
 image_dir = os.path.join(playlist_folder, 'images')
+
+max_duration = 600 #mins
 
 def extract_metadata(directory):
     data = []
@@ -31,6 +35,13 @@ def extract_metadata(directory):
 
             # Extract metadata
             name = audio['TIT2'].text[0] if 'TIT2' in audio else ''
+
+            duration = audio.info.length  # duration in seconds
+            print(f"Duration: {duration} : {name}")
+            if duration > max_duration:
+                os.remove(path)
+                print(f'Deleted file: {path}')
+
             if name:  # Only append metadata if 'name' is not empty
                 image_filename = f"{os.path.splitext(filename)[0]}.webp"
                 mp3_url = mp3_base_url + filename
@@ -54,7 +65,7 @@ def extract_metadata(directory):
                         artwork = audio[key].data  # access APIC frame and grab the image
                         img = Image.open(BytesIO(artwork))
                         cover_path = os.path.join(image_dir, os.path.splitext(os.path.basename(path))[0] + '.webp')
-                        print('saving', cover_path)
+                        # print('saving', cover_path)
                         img.save(cover_path, 'WEBP', quality=10)
 
     # Load existing JSON structure from the file
